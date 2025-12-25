@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AniWorld AP - Skip Anime Intros & Outros Automatically</title>
+  <meta name="description" content="A Firefox extension that automatically skips anime openings, endings, and recaps on AniWorld using community-sourced timestamps from AniSkip.">
+  <meta name="theme-color" content="#ff3366">
+  <meta property="og:title" content="AniWorld AP">
+  <meta property="og:description" content="Skip anime intros & outros automatically on AniWorld">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://raw.githubusercontent.com/Ziegel8171/Aniworld-AP/main/icons/icon-96.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg-deep:#0a0a0f;--bg-card:#12121a;--bg-elevated:#1a1a25;--accent-primary:#ff3366;--accent-secondary:#7c3aed;--accent-glow:rgba(255,51,102,0.4);--accent-glow-strong:rgba(255,51,102,0.6);--text-primary:#f0f0f5;--text-secondary:#8888a0;--text-muted:#5c5c70;--border-subtle:rgba(255,255,255,0.06);--border-accent:rgba(255,51,102,0.3);--success:#22c55e}*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Space Grotesk',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg-deep);color:var(--text-primary);line-height:1.6;overflow-x:hidden}.bg-glow{position:fixed;pointer-events:none;z-index:0}.bg-glow-1{top:-20%;right:-10%;width:60%;height:60%;background:radial-gradient(circle,rgba(255,51,102,0.12) 0%,transparent 60%)}.bg-glow-2{bottom:-20%;left:-10%;width:50%;height:50%;background:radial-gradient(circle,rgba(124,58,237,0.1) 0%,transparent 50%)}.container{max-width:1100px;margin:0 auto;padding:0 24px;position:relative;z-index:1}.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 0;background:rgba(10,10,15,0.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-subtle);transition:all 0.3s ease}.nav.scrolled{padding:12px 0;background:rgba(10,10,15,0.95)}.nav-content{display:flex;align-items:center;justify-content:space-between}.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none}.nav-logo{width:40px;height:40px;background:linear-gradient(135deg,var(--accent-primary) 0%,var(--accent-secondary) 100%);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px var(--accent-glow);font-weight:700;font-size:14px;color:white}.nav-title{font-size:18px;font-weight:700}.nav-title .ani{color:var(--text-primary)}.nav-title .world{color:var(--accent-primary)}.nav-title .ap{color:var(--text-secondary);font-size:14px;margin-left:2px}.nav-links{display:flex;align-items:center;gap:32px}.nav-link{color:var(--text-secondary);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.2s ease}.nav-link:hover{color:var(--text-primary)}.nav-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:linear-gradient(135deg,var(--accent-primary) 0%,var(--accent-secondary) 100%);color:white;text-decoration:none;font-size:14px;font-weight:600;border-radius:10px;transition:all 0.3s ease;box-shadow:0 4px 20px var(--accent-glow)}.nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--accent-glow-strong)}.nav-cta svg{width:18px;height:18px}.hero{padding:160px 0 100px;text-align:center;position:relative}.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:100px;font-size:12px;font-weight:500;color:var(--text-secondary);margin-bottom:24px}.hero-badge-dot{width:8px;height:8px;background:var(--success);border-radius:50%;animation:pulse 2s ease-in-out infinite}@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.7;transform:scale(1.1)}}.hero-title{font-size:clamp(40px,8vw,72px);font-weight:700;line-height:1.1;letter-spacing:-2px;margin-bottom:24px}.hero-title .highlight{background:linear-gradient(135deg,var(--accent-primary) 0%,var(--accent-secondary) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.hero-subtitle{font-size:18px;color:var(--text-secondary);max-width:500px;margin:0 auto 40px;line-height:1.7}.hero-actions{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 32px;font-size:16px;font-weight:600;font-family:inherit;border-radius:14px;text-decoration:none;cursor:pointer;transition:all 0.3s ease}.btn-primary{background:linear-gradient(135deg,var(--accent-primary) 0%,var(--accent-secondary) 100%);color:white;border:none;box-shadow:0 4px 20px var(--accent-glow)}.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px var(--accent-glow-strong)}.btn-secondary{background:var(--bg-card);color:var(--text-primary);border:1px solid var(--border-subtle)}.btn-secondary:hover{background:var(--bg-elevated);border-color:rgba(255,255,255,0.1)}.btn svg{width:20px;height:20px}.ui-showcase{padding:80px 0}.ui-showcase-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:900px;margin:0 auto}.ui-card{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:20px;overflow:hidden;transition:all 0.3s ease}.ui-card:hover{transform:translateY(-8px);box-shadow:0 20px 60px rgba(0,0,0,0.4);border-color:var(--border-accent)}.ui-card img{width:100%;height:auto;display:block}.ui-card-label{padding:16px;text-align:center;font-size:13px;font-weight:500;color:var(--text-secondary);border-top:1px solid var(--border-subtle)}.ui-card.icon-card{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;min-height:200px}.ui-card.icon-card img{width:80px;height:80px;object-fit:contain}.features{padding:100px 0}.section-header{text-align:center;margin-bottom:60px}.section-label{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:100px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--accent-primary);margin-bottom:16px}.section-title{font-size:clamp(32px,5vw,48px);font-weight:700;letter-spacing:-1px;margin-bottom:16px}.section-subtitle{font-size:16px;color:var(--text-secondary);max-width:500px;margin:0 auto}.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}.feature-card{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:20px;padding:32px;transition:all 0.3s ease}.feature-card:hover{border-color:rgba(255,255,255,0.1);transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,0.3)}.feature-icon{width:48px;height:48px;background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:20px}.feature-icon svg{width:24px;height:24px;color:var(--accent-primary)}.feature-title{font-size:18px;font-weight:600;margin-bottom:8px}.feature-description{font-size:14px;color:var(--text-secondary);line-height:1.6}.how-it-works{padding:100px 0;background:var(--bg-card)}.steps{display:flex;flex-direction:column;gap:40px;max-width:700px;margin:0 auto}.step{display:flex;gap:24px;align-items:flex-start}.step-number{width:48px;height:48px;background:linear-gradient(135deg,var(--accent-primary) 0%,var(--accent-secondary) 100%);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:white;flex-shrink:0}.step-content{flex:1}.step-title{font-size:20px;font-weight:600;margin-bottom:8px}.step-description{font-size:15px;color:var(--text-secondary);line-height:1.7}.cta{padding:100px 0;text-align:center}.cta-card{background:linear-gradient(135deg,rgba(255,51,102,0.1) 0%,rgba(124,58,237,0.1) 100%);border:1px solid var(--border-accent);border-radius:24px;padding:60px 40px;position:relative;overflow:hidden}.cta-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent-primary),var(--accent-secondary),var(--accent-primary));background-size:200% 100%;animation:shimmer 3s ease-in-out infinite}@keyframes shimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}.cta-title{font-size:clamp(28px,5vw,40px);font-weight:700;letter-spacing:-1px;margin-bottom:16px}.cta-subtitle{font-size:16px;color:var(--text-secondary);margin-bottom:32px;max-width:400px;margin-left:auto;margin-right:auto}.footer{padding:40px 0;border-top:1px solid var(--border-subtle)}.footer-content{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}.footer-brand{display:flex;align-items:center;gap:10px}.footer-logo{width:32px;height:32px;background:linear-gradient(135deg,var(--accent-primary) 0%,var(--accent-secondary) 100%);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:white}.footer-text{font-size:14px;color:var(--text-muted)}.footer-links{display:flex;align-items:center;gap:24px}.footer-link{color:var(--text-secondary);text-decoration:none;font-size:14px;transition:color 0.2s ease}.footer-link:hover{color:var(--text-primary)}.footer-social{display:flex;gap:12px}.footer-social a{width:36px;height:36px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--text-secondary);transition:all 0.2s ease}.footer-social a:hover{background:var(--bg-elevated);color:var(--text-primary);border-color:rgba(255,255,255,0.1)}.footer-social svg{width:18px;height:18px}@media(max-width:900px){.ui-showcase-grid{grid-template-columns:1fr 1fr}}@media(max-width:768px){.nav-links{display:none}.hero{padding:120px 0 60px}.ui-showcase-grid{grid-template-columns:1fr;max-width:340px}.step{flex-direction:column;text-align:center}.footer-content{flex-direction:column;text-align:center}}.animate-on-scroll{opacity:0;transform:translateY(30px);transition:all 0.6s ease}.animate-on-scroll.visible{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+<body>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <nav class="nav" id="nav">
+    <div class="container">
+      <div class="nav-content">
+        <a href="#" class="nav-brand">
+          <div class="nav-logo">AP</div>
+          <div class="nav-title"><span class="ani">Ani</span><span class="world">World</span> <span class="ap">AP</span></div>
+        </a>
+        <div class="nav-links">
+          <a href="#features" class="nav-link">Features</a>
+          <a href="#ui-showcase" class="nav-link">Screenshots</a>
+          <a href="#how-it-works" class="nav-link">How it Works</a>
+          <a href="https://github.com/Ziegel8171/Aniworld-AP" class="nav-link">GitHub</a>
+          <a href="https://addons.mozilla.org/firefox/addon/aniworld-autoplay/" class="nav-cta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Add to Firefox
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        <span>v1.4.2 — Now available on Firefox Add-ons</span>
+      </div>
+      <h1 class="hero-title">Skip Intros & Outros<br><span class="highlight">Automatically</span></h1>
+      <p class="hero-subtitle">A Firefox extension that skips anime openings, endings, and recaps on AniWorld using community-sourced timestamps.</p>
+      <div class="hero-actions">
+        <a href="https://addons.mozilla.org/firefox/addon/aniworld-autoplay/" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Add to Firefox — It's Free
+        </a>
+        <a href="https://github.com/Ziegel8171/Aniworld-AP" class="btn btn-secondary">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="ui-showcase" id="ui-showcase">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <div class="section-label">📸 Screenshots</div>
+        <h2 class="section-title">Beautiful Interface</h2>
+        <p class="section-subtitle">A sleek, modern UI that integrates seamlessly with your viewing experience</p>
+      </div>
+      <div class="ui-showcase-grid">
+        <div class="ui-card animate-on-scroll"><img src="screenshots/3AP.png" alt="Auto Skip Settings"><div class="ui-card-label">Auto Skip Settings</div></div>
+        <div class="ui-card animate-on-scroll"><img src="screenshots/2AP.png" alt="Playback & Colors"><div class="ui-card-label">Playback & Colors</div></div>
+        <div class="ui-card animate-on-scroll"><img src="screenshots/1AP.png" alt="Anime Detection"><div class="ui-card-label">Anime Detection</div></div>
+        <div class="ui-card animate-on-scroll"><img src="screenshots/6AP.png" alt="Skip Segments"><div class="ui-card-label">Skip Segments</div></div>
+        <div class="ui-card animate-on-scroll"><img src="screenshots/5AP.png" alt="Submit Timestamps"><div class="ui-card-label">Submit Timestamps</div></div>
+        <div class="ui-card icon-card animate-on-scroll"><img src="screenshots/4AP.png" alt="Skip Button"><div class="ui-card-label">Skip Button</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <div class="section-label">✨ Features</div>
+        <h2 class="section-title">Everything You Need</h2>
+        <p class="section-subtitle">Built for the best anime watching experience on AniWorld</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+          <h3 class="feature-title">Auto-Skip Segments</h3>
+          <p class="feature-description">Automatically skip openings, endings, and recaps using community-sourced timestamps from AniSkip.</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></div>
+          <h3 class="feature-title">Persistent Volume</h3>
+          <p class="feature-description">Your volume settings are remembered across episodes and browsing sessions.</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <h3 class="feature-title">Playback Memory</h3>
+          <p class="feature-description">Resume watching exactly where you left off with automatic position saving.</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
+          <h3 class="feature-title">Progress Markers</h3>
+          <p class="feature-description">Visual markers on the timeline show you exactly where skip segments are located.</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <h3 class="feature-title">Language Memory</h3>
+          <p class="feature-description">Remembers your preferred audio/subtitle language selection automatically.</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg></div>
+          <h3 class="feature-title">Contribute Timestamps</h3>
+          <p class="feature-description">Submit skip times for episodes that don't have them and help the community.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how-it-works" id="how-it-works">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <div class="section-label">🚀 Quick Setup</div>
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-subtitle">Get started in under a minute</p>
+      </div>
+      <div class="steps">
+        <div class="step animate-on-scroll">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3 class="step-title">Install the Extension</h3>
+            <p class="step-description">Click "Add to Firefox" to install AniWorld AP directly from Firefox Add-ons. It's free and takes just one click.</p>
+          </div>
+        </div>
+        <div class="step animate-on-scroll">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3 class="step-title">Watch Anime on AniWorld</h3>
+            <p class="step-description">Navigate to aniworld.to and start watching any anime episode. The extension automatically detects the anime and episode.</p>
+          </div>
+        </div>
+        <div class="step animate-on-scroll">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3 class="step-title">Skip Automatically</h3>
+            <p class="step-description">Enable auto-skip in the settings popup, and the extension will automatically skip intros and outros. Or use the manual skip buttons.</p>
+          </div>
+        </div>
+        <div class="step animate-on-scroll">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h3 class="step-title">Customize Your Experience</h3>
+            <p class="step-description">Adjust settings like marker colors, skip offset, playback memory duration, and more to match your preferences.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container">
+      <div class="cta-card animate-on-scroll">
+        <h2 class="cta-title">Ready to Skip the Intros?</h2>
+        <p class="cta-subtitle">Enhance your anime watching experience on AniWorld with automatic skip functionality.</p>
+        <a href="https://addons.mozilla.org/firefox/addon/aniworld-autoplay/" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Add to Firefox — It's Free
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="footer-logo">AP</div>
+          <span class="footer-text">Made with ❤️ for anime fans</span>
+        </div>
+        <div class="footer-links">
+          <a href="https://github.com/Ziegel8171/Aniworld-AP" class="footer-link">GitHub</a>
+          <a href="https://github.com/Ziegel8171/Aniworld-AP/issues" class="footer-link">Report Issue</a>
+          <a href="https://aniskip.com" class="footer-link">AniSkip API</a>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/Ziegel8171/Aniworld-AP" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav=document.getElementById('nav');window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>50)});
+    const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('visible')})},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+    document.querySelectorAll('.animate-on-scroll').forEach(el=>observer.observe(el));
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){e.preventDefault();document.querySelector(this.getAttribute('href'))?.scrollIntoView({behavior:'smooth',block:'start'})})});
+  </script>
+</body>
+</html>

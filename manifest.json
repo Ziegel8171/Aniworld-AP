@@ -1,0 +1,63 @@
+{
+  "manifest_version": 2,
+  "name": "AniWorld AP",
+  "version": "1.4.2",
+  "description": "Skip anime openings and endings on AniWorld using AniSkip - With persistent volume, playback position, and auto-play",
+  "author": "AniWorld AP",
+  "homepage_url": "https://github.com/aniskip",
+  "icons": {
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "webNavigation",
+    "<all_urls>",
+    "https://api.aniskip.com/*",
+    "https://api.jikan.moe/*"
+  ],
+  "browser_action": {
+    "default_icon": {
+      "48": "icons/icon-48.png",
+      "96": "icons/icon-96.png"
+    },
+    "default_title": "AniWorld AP",
+    "default_popup": "src/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.aniworld.to/*",
+        "*://aniworld.to/*"
+      ],
+      "js": [
+        "src/aniworld.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "background": {
+    "scripts": [
+      "src/background.js"
+    ],
+    "persistent": true
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "voe-aniskip@extension",
+      "strict_min_version": "58.0",
+      "data_collection_permissions": {
+        "required": [
+          "personallyIdentifyingInfo",
+          "websiteContent"
+        ]
+      }
+    }
+  },
+  "web_accessible_resources": [
+    "src/content.js",
+    "src/styles.css"
+  ]
+}
