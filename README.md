@@ -37,7 +37,7 @@
 ### Firefox
 
 #### From Firefox Add-ons (Recommended)
-*Coming soon*
+[Firefox extension](https://addons.mozilla.org/en-US/firefox/addon/aniworld-autoplay/)
 
 #### Manual Installation (Development)
 
