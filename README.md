@@ -1,21 +1,15 @@
 # AniWorld AP
 
-<p align="center">
-  <img src="icons/icon-96.png" alt="AniWorld AP Logo" width="96" height="96">
-</p>
+[![AniWorld AP Logo](icons/icon-96.png)](https://ziegel8171.github.io/Aniworld-AP)
 
-<p align="center">
-  <strong>Skip anime openings and endings on AniWorld using AniSkip</strong>
-</p>
+**Skip anime openings and endings on AniWorld using AniSkip**
 
-<p align="center">
-  <a href="#features">Features</a> •
-  <a href="#installation">Installation</a> •
-  <a href="#usage">Usage</a> •
-  <a href="#configuration">Configuration</a> •
-  <a href="#contributing">Contributing</a> •
-  <a href="#license">License</a>
-</p>
+[Features](#features) •
+[Installation](#installation) •
+[Usage](#usage) •
+[Configuration](#configuration) •
+[Contributing](#contributing) •
+[License](#license)
 
 ---
 
@@ -30,14 +24,17 @@
 - **Progress Bar Markers** — Visual indicators on the video timeline showing skip segments
 - **Manual Skip Buttons** — One-click buttons to skip to the next segment when auto-skip is disabled
 - **Submit Skip Times** — Contribute timestamps to the AniSkip community database
-- **Beautiful Settings UI** — Modern, sleek popup interface for configuration
+- **Beautiful Settings UI** — Modern, sleek popup interface with Classic and AniWorld themes
+- **Auto-Play Next Episode** — Automatically continue to the next episode when the current one ends
 
 ## Installation
 
 ### Firefox
 
 #### From Firefox Add-ons (Recommended)
-[Firefox extension](https://addons.mozilla.org/en-US/firefox/addon/aniworld-autoplay/)
+[![Firefox Add-ons](https://img.shields.io/amo/v/aniworld-autoplay?label=Firefox%20Add-ons&style=for-the-badge&logo=firefox)](https://addons.mozilla.org/en-US/firefox/addon/aniworld-autoplay/)
+
+*Click the badge above to install from the official Firefox Add-ons store*
 
 #### Manual Installation (Development)
 
@@ -61,7 +58,7 @@ To create a distributable `.xpi` file:
 
 ```bash
 cd Aniworld-AP
-zip -r ../aniworld-ap.xpi * -x "*.git*" -x "*.md" -x "screenshots/*"
+zip -r ../aniworld-ap.xpi * -x "*.git*" -x "docs/*" -x "screenshots/*"
 ```
 
 ## Usage
@@ -77,11 +74,14 @@ zip -r ../aniworld-ap.xpi * -x "*.git*" -x "*.md" -x "screenshots/*"
 
 4. **Submit Timestamps** — If skip times aren't available, you can submit them to help the community
 
+5. **Auto-Play Next Episode** — Enable in settings to automatically continue watching
+
 ## Configuration
 
 Click the extension icon to access the settings popup:
 
 ### Auto Skip
+
 | Setting | Description |
 |---------|-------------|
 | Skip Opening | Automatically skip anime intros |
@@ -89,20 +89,31 @@ Click the extension icon to access the settings popup:
 | Skip Recap | Automatically skip recap segments |
 
 ### Display
+
 | Setting | Description |
 |---------|-------------|
 | Show Skip Buttons | Display manual skip buttons on the player |
 | Skip Offset | Seconds to add/subtract from skip endpoint (-5 to 5) |
 
 ### Playback
+
 | Setting | Description |
 |---------|-------------|
 | Play After Skip | Automatically resume playback after skipping |
 | Remember Volume | Persist volume settings across episodes |
 | Remember Position | Resume playback where you left off |
 | Position Expiry | Days until saved position resets (1-30) |
+| Auto-Play Next Episode | Automatically continue to the next episode |
+| Auto-Play Delay | Seconds to wait before auto-playing (0-30) |
+
+### UI Theme
+
+| Setting | Description |
+|---------|-------------|
+| Theme Selection | Choose between Classic (dark purple/pink) and AniWorld (blue) themes |
 
 ### Progress Bar Colors
+
 | Setting | Description |
 |---------|-------------|
 | Opening Marker | Color for intro segments on the timeline |
@@ -124,21 +135,27 @@ AniWorld AP integrates with the VOE video player embedded in AniWorld pages:
 
 5. **Auto-Skip** — When enabled, automatically seeks past skip segments as they're reached
 
+6. **Auto-Play** — When enabled, detects episode end and navigates to the next episode
+
 ## Project Structure
 
 ```
-aniworld-ap/
+Aniworld-AP/
 ├── manifest.json          # Extension manifest (Manifest V2)
 ├── icons/
-│   ├── icon-48.png        # Toolbar icon
-│   └── icon-96.png        # High-DPI toolbar icon
-└── src/
-    ├── background.js      # Background script (API handling, injection)
-    ├── aniworld.js        # Content script for AniWorld pages
-    ├── content.js         # Content script for VOE player
-    ├── popup.html         # Settings popup HTML
-    ├── popup.js           # Settings popup logic
-    └── styles.css         # Injected player UI styles
+│   ├── icon-48.png        # Toolbar icon (48x48)
+│   ├── icon-96.png        # High-DPI toolbar icon (96x96)
+│   ├── icon-classic.svg   # Classic theme icon
+│   └── icon-aniworld.svg  # AniWorld theme icon
+├── src/
+│   ├── background.js      # Background script (API handling, injection)
+│   ├── aniworld.js        # Content script for AniWorld pages
+│   ├── content.js         # Content script for VOE player
+│   ├── popup.html         # Settings popup HTML
+│   ├── popup.js           # Settings popup logic
+│   └── styles.css         # Injected player UI styles
+└── docs/
+    └── index.html         # GitHub Pages documentation
 ```
 
 ## API Usage
@@ -174,12 +191,15 @@ Contributions are welcome! Here's how you can help:
    # Open a Pull Request
    ```
 
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+
 ## Privacy
 
 This extension:
+
 - **Does NOT** collect any personal information
 - **Does NOT** track your viewing history
-- **Stores locally**: Volume preference, playback positions, language preference, and anime cache
+- **Stores locally**: Volume preference, playback positions, language preference, anime cache, and theme preference
 - **Sends to AniSkip API**: MAL ID and episode number when fetching/submitting skip times
 - **Generates**: A random UUID stored locally as your submitter ID when contributing timestamps
 
@@ -188,30 +208,17 @@ This extension:
 - Skip times may not be available for all episodes — consider contributing!
 - Some video hosters other than VOE may not be fully supported
 - Playback position may not restore correctly if the video takes too long to load
+- Auto-play may not work if the next episode button is not found on the page
 
 ## Changelog
 
-### v1.4.2
-- Improved episode detection
-- Fixed playback position restoration
-- Enhanced in-progress episode marking
+See [CHANGELOG.md](CHANGELOG.md) for detailed version history.
 
-### v1.4.0
-- Added persistent playback position memory
-- Added in-progress episode visual indicators
-- Added language preference memory
-- Improved settings UI
-
-### v1.3.0
-- Added progress bar markers
-- Added customizable marker colors
-- Added skip offset setting
-
-### v1.0.0
-- Initial release
-- Auto-skip openings, endings, and recaps
-- Manual skip buttons
-- Persistent volume
+### Latest Version: v1.4.4
+- Added dual theme support (Classic and AniWorld)
+- Added auto-play next episode functionality
+- Improved UI/UX with better visual feedback
+- Enhanced settings organization
 
 ## License
 
@@ -222,9 +229,24 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 - [AniSkip](https://aniskip.com) for the skip times API
 - [Jikan](https://jikan.moe) for the MyAnimeList API
 - The anime community for contributing skip timestamps
+- [AniWorld.to](https://aniworld.to) for providing the platform
 
 ---
 
-<p align="center">
-  Made with ❤️ for anime fans
-</p>
+Made with ❤️ for anime fans
+
+## Support
+
+If you encounter any issues or have suggestions:
+
+- Open an [issue](https://github.com/Ziegel8171/Aniworld-AP/issues)
+- Check existing issues to see if your problem has been reported
+- Provide detailed information including browser version and extension version
+
+## Links
+
+- [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/aniworld-autoplay/)
+- [GitHub Repository](https://github.com/Ziegel8171/Aniworld-AP)
+- [GitHub Pages](https://ziegel8171.github.io/Aniworld-AP)
+- [AniSkip API](https://api.aniskip.com)
+- [Jikan API](https://jikan.moe/)
